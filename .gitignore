@@ -18,3 +18,5 @@ build
 app/bin
 app/.classpath
 gradle.properties
+app/src/.classpath
+app/src/bin/
