@@ -42,7 +42,7 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 							 "src/test/resources/entity_typing/MarshalledObject.java"});
 
 		int voidTypingCount = 0;
-		Method constructor = entitiesNamed(Method.class, "MarshalInputStream").iterator().next();
+		NamedEntity namedEntity = entitiesNamed(NamedEntity.class, "MarshalInputStream").iterator().next();
 		
 		// declared type is void and typed entity is MarshalInputStream
 		for (EntityTyping typing : entitiesOfType(EntityTyping.class)) {
@@ -50,7 +50,7 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 				TTypedEntity typedEntity = typing.getTypedEntity();
 
 				// bug on MarshalInputStream
-				if (typedEntity == constructor) {
+				if (typedEntity == namedEntity) {
 					voidTypingCount++;		
 				}
 			}
