@@ -38,6 +38,7 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 	 */
 	@Test
 	public void testStubConstructorHasExactlyOneVoidTyping() {
+		parse(new String[] { "src/test/resources/entity_typing/MarshalInputStream.java" });
 		parse(new String[] { "src/test/resources/entity_typing/MarshalledObject.java" });
 		
 		int voidTypingCount = 0;
