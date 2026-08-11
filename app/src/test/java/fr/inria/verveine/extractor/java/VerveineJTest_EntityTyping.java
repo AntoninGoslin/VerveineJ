@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.moosetechnology.model.famix.famixjavaentities.EntityTyping;
+import org.moosetechnology.model.famix.famixjavaentities.Method;
 import org.moosetechnology.model.famix.famixjavaentities.NamedEntity;
 import org.moosetechnology.model.famix.famixtraits.TTypedEntity;
 
@@ -41,17 +42,16 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 							 "src/test/resources/entity_typing/MarshalledObject.java"});
 
 		int voidTypingCount = 0;
-		NamedEntity namedEntity = entitiesNamed(NamedEntity.class, "MarshalInputStream").iterator().next();
-
+		Method constructor = entitiesNamed(Method.class, "MarshalInputStream").iterator().next();
+		
 		// declared type is void and typed entity is MarshalInputStream
 		for (EntityTyping typing : entitiesOfType(EntityTyping.class)) {
 			if ("void".equals(typing.getDeclaredType().getName())) {
 				TTypedEntity typedEntity = typing.getTypedEntity();
 
 				// bug on MarshalInputStream
-				if (typedEntity == namedEntity) {
-					voidTypingCount++;
-					
+				if (typedEntity == constructor) {
+					voidTypingCount++;		
 				}
 			}
 		}
