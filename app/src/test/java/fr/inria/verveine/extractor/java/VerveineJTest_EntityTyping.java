@@ -1,10 +1,8 @@
 package fr.inria.verveine.extractor.java;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
-import java.lang.invoke.TypeDescriptor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,24 +30,25 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 		parser.parse();
 		parser.exportModel(DEFAULT_OUTPUT_FILE);
 	}
-	
+
 	/*
-	 * These tests are here to check a bug of duplication happening on the entity typing
+	 * These tests are here to check a bug of duplication happening on the entity
+	 * typing
 	 */
 	@Test
 	public void testStubConstructorHasExactlyOneVoidTyping() {
-		parse(new String[] { "src/test/resources/entity_typing/MarshalInputStream.java" });
-		parse(new String[] { "src/test/resources/entity_typing/MarshalledObject.java" });
-		
+		parse(new String[] { "src/test/resources/entity_typing/MarshalledObject.java",
+							 "src/test/resources/entity_typing/MarshalInputStream.java" });
+
 		int voidTypingCount = 0;
-		
-		//declared type is void and typed entity is MarshalInputStream
-		for(EntityTyping typing : entitiesOfType(EntityTyping.class)) {
-			if(typing.getDeclaredType() != null && "void".equals(typing.getDeclaredType().getName())) {
+
+		// declared type is void and typed entity is MarshalInputStream
+		for (EntityTyping typing : entitiesOfType(EntityTyping.class)) {
+			if (typing.getDeclaredType() != null && "void".equals(typing.getDeclaredType().getName())) {
 				TTypedEntity typedEntity = typing.getTypedEntity();
-				
+
 				// bug on MarshalInputStream
-				if(typedEntity instanceof NamedEntity) {
+				if (typedEntity instanceof NamedEntity) {
 					NamedEntity namedEntity = (NamedEntity) typedEntity;
 					if ("MarshalInputStream".equals(namedEntity.getName())) {
 						voidTypingCount++;
@@ -57,8 +56,8 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 				}
 			}
 		}
-		
-		//we should have only 1 void for MarshalInputStream
+
+		// we should have only 1 void for MarshalInputStream
 		assertEquals(1, voidTypingCount);
 	}
 }
