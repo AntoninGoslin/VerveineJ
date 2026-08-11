@@ -37,22 +37,21 @@ public class VerveineJTest_EntityTyping extends VerveineJTestAbstract {
 	 */
 	@Test
 	public void testStubConstructorHasExactlyOneVoidTyping() {
-		parse(new String[] { "src/test/resources/entity_typing/MarshalledObject.java",
-							 "src/test/resources/entity_typing/MarshalInputStream.java" });
+		parse(new String[] { "src/test/resources/entity_typing/MarshalInputStream.java",
+							 "src/test/resources/entity_typing/MarshalledObject.java"});
 
 		int voidTypingCount = 0;
+		NamedEntity namedEntity = entitiesNamed(NamedEntity.class, "MarshalInputStream").iterator().next();
 
 		// declared type is void and typed entity is MarshalInputStream
 		for (EntityTyping typing : entitiesOfType(EntityTyping.class)) {
-			if (typing.getDeclaredType() != null && "void".equals(typing.getDeclaredType().getName())) {
+			if ("void".equals(typing.getDeclaredType().getName())) {
 				TTypedEntity typedEntity = typing.getTypedEntity();
 
 				// bug on MarshalInputStream
-				if (typedEntity instanceof NamedEntity) {
-					NamedEntity namedEntity = (NamedEntity) typedEntity;
-					if ("MarshalInputStream".equals(namedEntity.getName())) {
-						voidTypingCount++;
-					}
+				if (typedEntity == namedEntity) {
+					voidTypingCount++;
+					
 				}
 			}
 		}
